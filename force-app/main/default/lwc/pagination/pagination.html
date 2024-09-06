@@ -1,0 +1,26 @@
+<template>
+    <lightning-card title="Pagination and Search Demo">
+        <div style="margin: 2%;">
+            <template lwc:if={message}>
+                
+                <p style="display:flex;justify-content:center"><b>No accounts found.</b></p>
+            </template>
+            <div style="margin-bottom: 2%;">
+                <lightning-input placeholder="search..." onchange={handleSearch} disabled={disableIpt}></lightning-input>
+            </div>
+            
+        <template lwc:if={accounts}>
+            <c-accounts-displayed-on-parent accounts={accounts} onaccountselection={onaccountselection}></c-accounts-displayed-on-parent>
+            <div style="display: flex; justify-content:space-between; margin-top:2%">
+                <div>
+                    <lightning-button class="prev-btn" label="Show Prev" onclick={handlePrev} disabled={disPre}></lightning-button>
+                </div>
+                <div>
+                    <lightning-button class="next-btn" label="Show Next" onclick={handleNext} disabled={disNxt}></lightning-button>
+                </div>
+            </div>
+        </template>
+        
+        </div>
+    </lightning-card>
+</template>

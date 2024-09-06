@@ -1,0 +1,23 @@
+<template>
+    
+        <template for:each={accounts} for:item="acc">
+            <div key={acc.Id} style="display: flex; justify-content: space-between; border-bottom: 1px solid black">
+                <div lwc:if={acc.isChecked}>
+                    <lightning-input type="checkbox" onchange={handleCheckboxChange} data-id={acc.Id}
+                        checked="true"></lightning-input>
+                </div>
+                <div lwc:else>
+                    <lightning-input type="checkbox" onchange={handleCheckboxChange} data-id={acc.Id}></lightning-input>
+                </div>
+                <div>
+                    {acc.Name}
+                </div>
+                <div>
+                    {acc.Phone}
+                </div>
+        
+            </div>
+        </template>
+
+    
+</template>
