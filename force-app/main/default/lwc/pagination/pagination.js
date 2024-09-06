@@ -23,7 +23,7 @@ export default class Pagination extends LightningElement {
         
         this.accounts = this.accounts.map(({ attributes, ...account }) => account);
         
-        this.currentPageAccounts = [...this.accounts];
+        
         try {
         if (this.accounts.length > 0) {
             this.message = false;
@@ -42,12 +42,7 @@ export default class Pagination extends LightningElement {
     } catch (error) {
         console.error('Error in handleAccounts:', error);
     }
-        const duplicate = this.accounts.filter(item => this.accids.includes(item.Id));
-        if(duplicate.length === 0){
-            this.allAccounts = [...this.accounts, ...this.allAccounts];
-            this.accids = this.allAccounts.map(acc => acc.Id);
-            this.namesLst = new Set(this.allAccounts.map(acc => acc.Name));
-        }
+        
         
         if (this.selectedAccounts.length > 0) {
             this.accounts = this.accounts.map(account => {
@@ -57,6 +52,25 @@ export default class Pagination extends LightningElement {
         } else {
             this.accounts = this.accounts.map(account => ({ ...account, isChecked: false }));
         }
+        console.log('this.selectedAccounts ', JSON.stringify(this.selectedAccounts));
+        this.currentPageAccounts = [...this.accounts];
+        const duplicate = this.accounts.filter(item => this.accids.includes(item.Id));
+        if(duplicate.length === 0){
+            if (this.selectedAccounts.length > 0) {
+            this.allAccounts = this.allAccounts.map(account => {
+                const isChecked = this.selectedAccounts.includes(account.Id);
+                return { ...account, isChecked };
+            });
+        } else {
+            this.accounts = this.accounts.map(account => ({ ...account, isChecked: false }));
+        }
+            console.log('Duplicate', JSON.stringify(this.accounts));
+            this.allAccounts = [...this.accounts, ...this.allAccounts];
+            this.accids = this.allAccounts.map(acc => acc.Id);
+            this.namesLst = new Set(this.allAccounts.map(acc => acc.Name));
+        }
+        console.log('this.accIds ', this.accids);
+        console.log('this.allAccounts', JSON.stringify(this.allAccounts));
         
       } else if (error) {
         console.error('Error:', error);
